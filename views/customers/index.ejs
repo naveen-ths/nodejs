@@ -13,7 +13,7 @@
                  <th>Customer Address</th>
                  <th>Customer Phone</th>
                  <th>Customer Email</th>
-                 <th>Customer Created At</th>
+                 <th>Customer Added At</th>
                  <th>Action</th>
              </tr>
          </thead>
@@ -30,9 +30,9 @@
                     <td><%=data[i].email%></td>
                     <td><%=data[i].created_at%></td>
                     <td>
-                        <a class="a-inside edit" href="../customers/edit/<%=data[i].id%>">Edit</a>
+                        <a class="a-inside edit" href="/customers/edit/<%=data[i].id%>">Edit</a>
                        
-                        <a class="a-inside delete" href="../customers/delete/<%=data[i].id%>">Delete</a>
+                        <a class="a-inside delete" href="/customers/delete/<%=data[i].id%>">Delete</a>
                        
                     </td>
                 </tr>

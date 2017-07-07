@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// including routes files
 var index = require('./routes/index');
 var users = require('./routes/users');
 var customers = require('./routes/customers');
@@ -22,10 +23,11 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Mysql connection
 app.use(
     connection(mysql,{ 
         host: 'localhost',
@@ -38,6 +40,7 @@ app.use(
 
 );
 
+// Handling user requests
 app.use('/', index);
 app.use('/users', users);
 app.use('/customers', customers);
