@@ -55,9 +55,42 @@ router.post('/save', function (req, res) {
     });
 });
 
-router.get('/edit/:customerId(\d+)', function (req, res, next) {
-    console.log(req.params);
-    res.render('customers/edit', {title: 'Edit Customer'});
+router.get('/edit/:id', function (req, res, next) {
+    var customer_id = req.params.id;
+    req.getConnection(function (err, connection) {
+
+        var query = connection.query('SELECT * FROM customer WHERE id = ? ', [customer_id], function (err, rows)
+        {
+
+            if (err)
+                console.log("Error Selecting : %s ", err);
+            
+            res.render('customers/edit', {title: "Edit Customer", data: rows});
+        });
+        //console.log(query.sql);
+    });
+});
+
+router.post('/update', function (req, res, next) {
+    var customerData = req.body;
+    
+    req.getConnection(function (err, connection) {
+
+        var data = {
+            name: customerData.name,
+            address: customerData.address,
+            email: customerData.email,
+            phone: customerData.phone
+        };
+
+        connection.query("UPDATE customer set ? WHERE id = ? ", [data, customerData.id], function (err, rows)
+        {
+
+            if (err)
+                console.log("Error Updating : %s ", err);
+            res.redirect(301, '/customers')
+        });
+    });
 });
 
 router.get('/delete/:customerId(\d+)', function (req, res, next) {
