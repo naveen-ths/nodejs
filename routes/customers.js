@@ -93,8 +93,19 @@ router.post('/update', function (req, res, next) {
     });
 });
 
-router.get('/delete/:customerId(\d+)', function (req, res, next) {
-    res.render('customers/delete', {title: 'Delete Customer'});
+router.get('/delete/:id', function (req, res, next) {
+    var customer_id = req.params.id;
+    
+    req.getConnection(function (err, connection) {
+        connection.query("DELETE FROM customer  WHERE id = ? ",[customer_id], function(err, rows)
+        {
+             if(err)
+                 console.log("Error deleting : %s ",err );
+            
+             res.redirect('/customers');
+             
+        });
+     });
 });
 
 module.exports = router;
