@@ -1,19 +1,21 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 // including routes files
-var index = require('./routes/index');
-var users = require('./routes/users');
-var customers = require('./routes/customers');
+let index = require('./routes/index');
+let users = require('./routes/users');
+let customers = require('./routes/customers');
 
-var app = express();
+let app = express();
 
-var connection  = require('express-myconnection'); 
-var mysql = require('mysql');
+let connection  = require('express-myconnection'); 
+let mysql = require('mysql');
+
+let session = require('express-session');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,13 +34,19 @@ app.use(
     connection(mysql,{ 
         host: 'localhost',
         user: 'root',
-        password : 'root123',
+        password : 'Root@123',
         port : 3306, //port mysql
         database:'nodejs'
 
     },'pool') //or single
 
 );
+
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 
 // Handling user requests
 app.use('/', index);

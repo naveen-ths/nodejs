@@ -1,37 +1,40 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    req.getConnection(function (err, connection) {
+router.get('/', (req, res, next) => {
+    if (req.session.loggedin) {
+        req.getConnection(function (err, connection) {
 
-        var query = connection.query('SELECT * FROM customer ORDER BY `id` DESC ', function (err, rows)
-        {
+            var query = connection.query('SELECT * FROM customer ORDER BY `id` DESC ', function (err, rows)
+            {
 
-            if (err)
-                console.log("Error Selecting : %s ", err);
+                if (err)
+                    console.log("Error Selecting : %s ", err);
 
-            res.render('customers/index', {title: "Customers - Node.js", data: rows});
+                res.render('customers/index', {title: "Customers - Node.js", data: rows});
 
 
+            });
+
+            //console.log(query.sql);
         });
-
-        //console.log(query.sql);
-    });
-
+    } else {
+        res.redirect('/users/login');
+    }
 });
 
 /**
  * function to load add customer page
  */
-router.get('/add', function (req, res, next) {
+router.get('/add', (req, res, next) => {
     res.render('customers/add', {title: 'Add Customer'});
 });
 
 /**
  * function to save customer data
  */
-router.post('/save', function (req, res) {
+router.post('/save', (req, res, next) => {
     var customerData = req.body;
     req.getConnection(function (err, connection) {
         var data = {
@@ -55,7 +58,7 @@ router.post('/save', function (req, res) {
     });
 });
 
-router.get('/edit/:id', function (req, res, next) {
+router.get('/edit/:id', (req, res, next) => {
     var customer_id = req.params.id;
     req.getConnection(function (err, connection) {
 
@@ -64,16 +67,16 @@ router.get('/edit/:id', function (req, res, next) {
 
             if (err)
                 console.log("Error Selecting : %s ", err);
-            
+
             res.render('customers/edit', {title: "Edit Customer", data: rows});
         });
         //console.log(query.sql);
     });
 });
 
-router.post('/update', function (req, res, next) {
+router.post('/update', (req, res, next) => {
     var customerData = req.body;
-    
+
     req.getConnection(function (err, connection) {
 
         var data = {
@@ -94,19 +97,19 @@ router.post('/update', function (req, res, next) {
     });
 });
 
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', (req, res, next) => {
     var customer_id = req.params.id;
-    
+
     req.getConnection(function (err, connection) {
         connection.query("DELETE FROM customer  WHERE id = ? ",[customer_id], function(err, rows)
         {
              if(err)
                  console.log("Error deleting : %s ",err );
-            
-             res.redirect('/customers');
-             
+
+            res.redirect('/customers');
+
         });
-     });
+    });
 });
 
 module.exports = router;
