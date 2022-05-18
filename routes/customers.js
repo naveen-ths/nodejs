@@ -38,8 +38,8 @@ router.post('/save', function (req, res) {
             name: customerData.name,
             address: customerData.address,
             email: customerData.email,
-            phone: customerData.phone
-
+            phone: customerData.phone,
+            created_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
         };
         var query = connection.query("INSERT INTO customer set ? ", data, function (err, rows)
         {
@@ -80,7 +80,8 @@ router.post('/update', function (req, res, next) {
             name: customerData.name,
             address: customerData.address,
             email: customerData.email,
-            phone: customerData.phone
+            phone: customerData.phone,
+            updated_at: new Date().toISOString().slice(0, 19).replace('T', ' ')
         };
 
         connection.query("UPDATE customer set ? WHERE id = ? ", [data, customerData.id], function (err, rows)
