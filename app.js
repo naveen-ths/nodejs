@@ -4,6 +4,14 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+var Tokens = require('csrf')
+
+let tokens = new Tokens()
+ const token = tokens.secret().then(function (secret) {
+  // do something with the secret
+  console.log(secret);
+});
+ 
 
 // including routes files
 let index = require('./routes/index');
@@ -34,7 +42,7 @@ app.use(
     connection(mysql,{ 
         host: 'localhost',
         user: 'root',
-        password : 'Root@123',
+        password : '',
         port : 3306, //port mysql
         database:'nodejs'
 

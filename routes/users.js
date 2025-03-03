@@ -1,11 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
-router.get('/login', (req, res, next) => {
-    res.render('users/login', {title: 'Login'});
-});
-
 /**
  * function to handle login
  */
