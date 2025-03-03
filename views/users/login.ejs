@@ -1,38 +1,49 @@
-<%- include('../layouts/header'); -%>
-<div class="back">
-  <div class="div-center">
-    <div class="content">
-      <h3>Login</h3>
-      <hr />
-      <form method="post" action="/users/auth" name="login-user">
-        <div class="form-group">
-          <label for="username" class="control-label">Username</label>
-          <input
-            maxlength="128"
-            type="text"
-            name="username"
-            class="form-control"
-            id="username"
-            value=""
-          />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" >
+    <link rel="stylesheet" href="/stylesheets/style.css" >
+  </head>
+  <body>
+    <div class="back">
+      <div class="div-center">
+        <div class="content">
+          <h3>Login</h3>
+          <hr>
+          <form method="post" action="/users/auth" name="login-user">
+            <div class="form-group">
+              <label for="username" class="control-label">Username</label>
+              <input
+                maxlength="128"
+                type="text"
+                name="username"
+                class="form-control"
+                id="username"
+                value=""
+              >
+            </div>
+            <div class="form-group">
+              <label for="password" class="control-label">Password</label>
+              <input
+                maxlength="128"
+                type="password"
+                name="password"
+                class="form-control"
+                id="password"
+                value=""
+              >
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <hr>
+            <button type="button" class="btn btn-link">Signup</button>
+            <button type="button" class="btn btn-link">Reset Password</button>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="password" class="control-label">Password</label>
-          <input
-            maxlength="128"
-            type="password"
-            name="password"
-            class="form-control"
-            id="password"
-            value=""
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-        <hr />
-        <button type="button" class="btn btn-link">Signup</button>
-        <button type="button" class="btn btn-link">Reset Password</button>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
-<%- include('../layouts/footer'); -%>
+    <div id="footer">copyright@2025</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javscript" src="/javascripts/bootstrap.min.js"></script>
+  </body>
+</html>
